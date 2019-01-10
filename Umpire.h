@@ -3,9 +3,9 @@
 
 #include "Arduino.h"
 
-class TableTennisGame {
+class Umpire {
   public:
-    TableTennisGame();
+    Umpire();
     void addScoreForPlayer(uint8_t playerIndex);
     void subtractScoreForPlayer(uint8_t playerIndex);
     void reset();
@@ -14,10 +14,15 @@ class TableTennisGame {
     uint8_t getScoreForPlayer(uint8_t playerIndex);
     void parse(String data);
     String stringify();
+    uint8_t getScoreTotal();
+    uint8_t getScoreDifference();
+
+    uint8_t getPlayerServing();
 
   private:
     uint8_t score[2];
     uint8_t initalServe[2];
+    uint8_t numberOfServesEach;
 };
 
 #endif
