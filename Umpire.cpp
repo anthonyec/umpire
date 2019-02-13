@@ -4,11 +4,11 @@
 
 Umpire::Umpire()
 // Intialisation list
-: numberOfServesEach(2)
+: numberOfServesEach(2),
+  initialSideToServe(0)
 {
   // Array can only be assigned by stating the type
   uint8_t score[2] = {0, 0};
-  uint8_t initalServe[2] = {0, 1};
 }
 
 void Umpire::addScoreForPlayer(uint8_t playerIndex) {
@@ -24,26 +24,19 @@ void Umpire::subtractScoreForPlayer(uint8_t playerIndex) {
 void Umpire::reset() {
  score[0] = 0;
  score[1] = 0;
+ initialSideToServe = 0;
 };
 
 void Umpire::setServesEach(uint8_t number) {
   numberOfServesEach = number;
 };
 
-void Umpire::setInitalServer(uint8_t playerIndex) {
-  if (playerIndex == 1) {
-    initalServe[0] = 1;
-    initalServe[1] = 0;
-  } else {
-    initalServe[0] = 0;
-    initalServe[1] = 1;
-  }
+void Umpire::setInitialServer(uint8_t playerIndex) {
+  initialSideToServe = playerIndex;
 };
 
 void Umpire::flipInitialServer() {
-  uint8_t temp0 = initalServe[0];
-  initalServe[0] = initalServe[1];
-  initalServe[1] = temp0;
+  initialSideToServe = initialSideToServe ^ 1;
 };
 
 uint8_t Umpire::getScoreDifference() {
@@ -56,7 +49,9 @@ uint8_t Umpire::getScoreTotal() {
 
 uint8_t Umpire::getPlayerServing() {
   uint8_t scoreTotal = Umpire::getScoreTotal();
-  return fmod(floor((double)scoreTotal / numberOfServesEach), 2);
+  uint8_t serving = fmod(floor((double)scoreTotal / numberOfServesEach), 2);
+
+  return serving ^ initialSideToServe;
 };
 
 uint8_t Umpire::getScoreForPlayer(uint8_t playerIndex) {
