@@ -6,17 +6,17 @@
 class Umpire {
   public:
     Umpire();
-    void addScoreForPlayer(uint8_t playerIndex);
-    void subtractScoreForPlayer(uint8_t playerIndex);
-    void reset();
+    void addScoreForPlayer(uint8_t playerIndex); // t
+    void subtractScoreForPlayer(uint8_t playerIndex); // t
+    void reset(); // t
     void setInitalServer(uint8_t playerIndex);
+    void setServesEach(uint8_t number);
     void flipInitialServer();
-    uint8_t getScoreForPlayer(uint8_t playerIndex);
+    uint8_t getScoreForPlayer(uint8_t playerIndex); // t
     void parse(String data);
     String stringify();
-    uint8_t getScoreTotal();
-    uint8_t getScoreDifference();
-
+    uint8_t getScoreTotal(); // t
+    uint8_t getScoreDifference(); // t
     uint8_t getPlayerServing();
 
   private:

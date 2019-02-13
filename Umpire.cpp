@@ -16,13 +16,18 @@ void Umpire::addScoreForPlayer(uint8_t playerIndex) {
 };
 
 void Umpire::subtractScoreForPlayer(uint8_t playerIndex) {
-  uint8_t newScore = score[playerIndex] - 1;
-  score[playerIndex] -= (newScore > 0) ? 1 : 0;
+  int8_t newScore = score[playerIndex] - 1;
+  uint8_t scoreToSubtract = newScore < 0 ? 0 : 1;
+  score[playerIndex] -= scoreToSubtract;
 };
 
 void Umpire::reset() {
  score[0] = 0;
  score[1] = 0;
+};
+
+void Umpire::setServesEach(uint8_t number) {
+  numberOfServesEach = number;
 };
 
 void Umpire::setInitalServer(uint8_t playerIndex) {
@@ -51,7 +56,6 @@ uint8_t Umpire::getScoreTotal() {
 
 uint8_t Umpire::getPlayerServing() {
   uint8_t scoreTotal = Umpire::getScoreTotal();
-
   return fmod(floor((double)scoreTotal / numberOfServesEach), 2);
 };
 
