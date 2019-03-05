@@ -5,7 +5,13 @@
 
 class Umpire {
   public:
+    static const uint8_t kEventEnd = 1;
+    static const uint8_t kEventReset = 2;
+    static const uint8_t kEventUndo = 3;
+    static const uint8_t kEventDeuce = 4;
+
     Umpire();
+    void setEventHandler(void(*new_action)());
     void addScoreForPlayer(uint8_t playerIndex); // t
     void subtractScoreForPlayer(uint8_t playerIndex); // t
     void reset(); // t
@@ -21,6 +27,7 @@ class Umpire {
     uint8_t score[2];
     uint8_t initialSideToServe = 0;
     uint8_t numberOfServesEach;
+    // typedef eventHandler
 };
 
 #endif

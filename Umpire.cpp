@@ -11,6 +11,10 @@ Umpire::Umpire()
   uint8_t score[2] = {0, 0};
 }
 
+void Umpire::setEventHandler(void(*func)()) {
+
+};
+
 void Umpire::addScoreForPlayer(uint8_t playerIndex) {
   score[playerIndex] += 1;
 };
@@ -57,4 +61,5 @@ uint8_t Umpire::getPlayerServing() {
 uint8_t Umpire::getScoreForPlayer(uint8_t playerIndex) {
   return score[playerIndex];
 };
+
 
