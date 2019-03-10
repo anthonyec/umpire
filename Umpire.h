@@ -10,8 +10,11 @@ class Umpire {
     static const uint8_t kEventUndo = 3;
     static const uint8_t kEventDeuce = 4;
 
+    // Function pointer definition for event handler
+    typedef void(*EventHandler)(uint8_t);
+
     Umpire();
-    void setEventHandler(void(*new_action)());
+    void setEventHandler(EventHandler callback);
     void addScoreForPlayer(uint8_t playerIndex); // t
     void subtractScoreForPlayer(uint8_t playerIndex); // t
     void reset(); // t
@@ -27,7 +30,7 @@ class Umpire {
     uint8_t score[2];
     uint8_t initialSideToServe = 0;
     uint8_t numberOfServesEach;
-    // typedef eventHandler
+    EventHandler mEventHandler;
 };
 
 #endif

@@ -11,8 +11,8 @@ Umpire::Umpire()
   uint8_t score[2] = {0, 0};
 }
 
-void Umpire::setEventHandler(void(*func)()) {
-
+void Umpire::setEventHandler(EventHandler callback) {
+  mEventHandler = callback;
 };
 
 void Umpire::addScoreForPlayer(uint8_t playerIndex) {
@@ -29,6 +29,7 @@ void Umpire::reset() {
  score[0] = 0;
  score[1] = 0;
  initialSideToServe = 0;
+ mEventHandler(kEventReset);
 };
 
 void Umpire::setServesEach(uint8_t number) {

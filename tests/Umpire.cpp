@@ -9,23 +9,62 @@ using namespace aunit;
 Umpire game;
 
 // Test helpers
+bool testEventCalled = false;
+uint8_t testLastEventType = 0;
+uint8_t testEventCallCount = 0;
+
 void beforeEach() {
+  // Reset invoked before event varibles are reset
+  // otherwise testEventCallCount incorrect as reset
+  // calls the event handler.
   game.reset();
+
+  testEventCalled = false;
+  testLastEventType = 0;
+  testEventCallCount = 0;
 };
 
+void testEventHandler(uint8_t eventType) {
+  testLastEventType = eventType;
+  testEventCalled = true;
+  testEventCallCount += 1;
+}
+
 // Tests
-test(reset) {
+test(kEvents) {
+  assertEqual(Umpire::kEventEnd, 1);
+  assertEqual(Umpire::kEventReset, 2);
+  assertEqual(Umpire::kEventUndo, 3);
+  assertEqual(Umpire::kEventDeuce, 4);
+}
+
+test(kEventReset) {
   beforeEach();
 
   game.addScoreForPlayer(0);
   game.addScoreForPlayer(1);
   game.reset();
 
+  assertEqual(testEventCalled, true);
+  assertEqual(testLastEventType, Umpire::kEventReset);
+  assertEqual(testEventCallCount, 1);
+}
+
+test(reset) {
+  beforeEach();
+
+  game.addScoreForPlayer(0);
+  game.addScoreForPlayer(1);
+  game.setInitialServer(1);
+  game.reset();
+
   uint8_t scorePlayer1 = game.getScoreForPlayer(0);
   uint8_t scorePlayer2 = game.getScoreForPlayer(1);
+  uint8_t intialServer = game.getPlayerServing();
 
   assertEqual(scorePlayer1, 0);
   assertEqual(scorePlayer2, 0);
+  assertEqual(intialServer, 0);
 }
 
 test(addScoreForPlayer) {
@@ -191,6 +230,8 @@ void setup() {
   delay(1000);
   Serial.begin(9600);
   while (!Serial);
+
+  game.setEventHandler(testEventHandler);
 }
 
 void loop() {
