@@ -32,7 +32,7 @@ void testEventHandler(uint8_t eventType) {
 
 // Tests
 test(kEvents) {
-  assertEqual(Umpire::kEventEnd, 1);
+  assertEqual(Umpire::kEventChange, 1);
   assertEqual(Umpire::kEventReset, 2);
   assertEqual(Umpire::kEventUndo, 3);
   assertEqual(Umpire::kEventDeuce, 4);
@@ -41,13 +41,35 @@ test(kEvents) {
 test(kEventReset) {
   beforeEach();
 
-  game.addScoreForPlayer(0);
-  game.addScoreForPlayer(1);
   game.reset();
 
   assertEqual(testEventCalled, true);
   assertEqual(testLastEventType, Umpire::kEventReset);
   assertEqual(testEventCallCount, 1);
+}
+
+test(kEventChange_addScoreForPlayer) {
+  beforeEach();
+
+  game.addScoreForPlayer(0);
+  game.addScoreForPlayer(1);
+
+  assertEqual(testEventCalled, true);
+  assertEqual(testLastEventType, Umpire::kEventChange);
+  assertEqual(testEventCallCount, 2);
+}
+
+
+test(kEventChange_subtractScoreForPlayer) {
+  beforeEach();
+
+  game.addScoreForPlayer(0);
+  game.subtractScoreForPlayer(0);
+  game.subtractScoreForPlayer(0);
+
+  assertEqual(testEventCalled, true);
+  assertEqual(testLastEventType, Umpire::kEventChange);
+  assertEqual(testEventCallCount, 2);
 }
 
 test(reset) {

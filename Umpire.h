@@ -5,7 +5,7 @@
 
 class Umpire {
   public:
-    static const uint8_t kEventEnd = 1;
+    static const uint8_t kEventChange = 1;
     static const uint8_t kEventReset = 2;
     static const uint8_t kEventUndo = 3;
     static const uint8_t kEventDeuce = 4;

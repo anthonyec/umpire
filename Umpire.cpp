@@ -17,12 +17,17 @@ void Umpire::setEventHandler(EventHandler callback) {
 
 void Umpire::addScoreForPlayer(uint8_t playerIndex) {
   score[playerIndex] += 1;
+  mEventHandler(kEventChange);
 };
 
 void Umpire::subtractScoreForPlayer(uint8_t playerIndex) {
   int8_t newScore = score[playerIndex] - 1;
   uint8_t scoreToSubtract = newScore < 0 ? 0 : 1;
   score[playerIndex] -= scoreToSubtract;
+
+  if (scoreToSubtract == 1) {
+    mEventHandler(kEventChange);
+  }
 };
 
 void Umpire::reset() {
