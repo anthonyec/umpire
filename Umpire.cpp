@@ -11,20 +11,30 @@ Umpire::Umpire()
   uint8_t score[2] = {0, 0};
 }
 
+void Umpire::setEventHandler(EventHandler callback) {
+  mEventHandler = callback;
+};
+
 void Umpire::addScoreForPlayer(uint8_t playerIndex) {
   score[playerIndex] += 1;
+  mEventHandler(kEventChange);
 };
 
 void Umpire::subtractScoreForPlayer(uint8_t playerIndex) {
   int8_t newScore = score[playerIndex] - 1;
   uint8_t scoreToSubtract = newScore < 0 ? 0 : 1;
   score[playerIndex] -= scoreToSubtract;
+
+  if (scoreToSubtract == 1) {
+    mEventHandler(kEventChange);
+  }
 };
 
 void Umpire::reset() {
  score[0] = 0;
  score[1] = 0;
  initialSideToServe = 0;
+ mEventHandler(kEventReset);
 };
 
 void Umpire::setServesEach(uint8_t number) {
@@ -57,4 +67,5 @@ uint8_t Umpire::getPlayerServing() {
 uint8_t Umpire::getScoreForPlayer(uint8_t playerIndex) {
   return score[playerIndex];
 };
+
 
