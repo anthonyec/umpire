@@ -190,6 +190,38 @@ test(getPlayerServing_5_serves_each) {
   assertEqual(game.getPlayerServing(), 1);
 }
 
+test(getPlayerServing_deuce_2_serves_each) {
+  beforeEach();
+
+  repeat(10) {
+    game.addScoreForPlayer(0);
+  }
+
+  repeat(10) {
+    game.addScoreForPlayer(1);
+  }
+
+  // Game score: 10-10
+  // Player 0 would have 2 serves now usually, but as the
+  // score is >= 20, it is now duece. Player 0 only has 1 serve.
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(0);
+
+  // Game score: 11-10
+  assertEqual(game.getPlayerServing(), 1);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 11-11
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 11-12
+  assertEqual(game.getPlayerServing(), 1);
+}
+
 void setup() {
   delay(1000);
   Serial.begin(9600);
