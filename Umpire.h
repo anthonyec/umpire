@@ -11,6 +11,7 @@ class Umpire {
     void reset(); // t
     void setInitialServer(uint8_t playerIndex); // t
     void setServesEach(uint8_t number); // t
+    void setWinScore(uint8_t number); // t
     void flipInitialServer(); // t
     uint8_t getScoreForPlayer(uint8_t playerIndex); // t
     uint8_t getScoreTotal(); // t

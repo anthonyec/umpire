@@ -36,6 +36,10 @@ void Umpire::setInitialServer(uint8_t playerIndex) {
   initialSideToServe = playerIndex;
 };
 
+void Umpire::setWinScore(uint8_t number) {
+  winScore = number;
+}
+
 void Umpire::flipInitialServer() {
   initialSideToServe = initialSideToServe ^ 1;
 };
