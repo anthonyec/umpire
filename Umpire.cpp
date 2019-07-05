@@ -54,7 +54,10 @@ uint8_t Umpire::getScoreTotal() {
 
 uint8_t Umpire::getPlayerServing() {
   uint8_t scoreTotal = Umpire::getScoreTotal();
+
+  // scoreToWin x amountToWinBy - 2
   bool deuce = scoreTotal >= ((winScore * 2) - 2);
+
   uint8_t servesEach = deuce ? 1 : numberOfServesEach;
   uint8_t serving = fmod(floor((double)scoreTotal / servesEach), 2);
 
