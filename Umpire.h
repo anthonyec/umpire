@@ -21,6 +21,7 @@ class Umpire {
     uint8_t score[2];
     uint8_t initialSideToServe = 0;
     uint8_t numberOfServesEach;
+    uint8_t winScore;
 };
 
 #endif
