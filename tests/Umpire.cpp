@@ -19,13 +19,16 @@ test(reset) {
 
   game.addScoreForPlayer(0);
   game.addScoreForPlayer(1);
+  game.setInitialServer(1);
   game.reset();
 
   uint8_t scorePlayer1 = game.getScoreForPlayer(0);
   uint8_t scorePlayer2 = game.getScoreForPlayer(1);
+  uint8_t intialServer = game.getPlayerServing();
 
   assertEqual(scorePlayer1, 0);
   assertEqual(scorePlayer2, 0);
+  assertEqual(intialServer, 0);
 }
 
 test(addScoreForPlayer) {
