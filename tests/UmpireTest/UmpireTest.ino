@@ -1,4 +1,3 @@
-// Macro test helpers
 #define repeat(n) for(int ii = 0; ii < n; ++ ii)
 
 #include <AUnit.h>
@@ -196,7 +195,7 @@ test(getPlayerServing_deuce_2_serves_each) {
   beforeEach();
 
   game.setServesEach(2);
-  game.setWinScore(11);
+  game.setScoreToWin(11);
 
   game.getPlayerServing();
 
@@ -254,7 +253,7 @@ test(getPlayerServing_deuce_5_serves_each) {
   beforeEach();
 
   game.setServesEach(5);
-  game.setWinScore(21);
+  game.setScoreToWin(21);
 
   game.getPlayerServing();
 
