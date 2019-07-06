@@ -1,4 +1,3 @@
-// Macro test helpers
 #define repeat(n) for(int ii = 0; ii < n; ++ ii)
 
 #include <AUnit.h>
@@ -127,6 +126,8 @@ test(getScoreForPlayer) {
 test(getPlayerServing_2_serves_each) {
   beforeEach();
 
+  game.setServesEach(2);
+
   // Game score: 0-0
   assertEqual(game.getPlayerServing(), 0);
 
@@ -188,6 +189,136 @@ test(getPlayerServing_5_serves_each) {
 
   // Game score: 3-2
   assertEqual(game.getPlayerServing(), 1);
+}
+
+test(getPlayerServing_deuce_2_serves_each) {
+  beforeEach();
+
+  game.setServesEach(2);
+  game.setScoreToWin(11);
+
+  game.getPlayerServing();
+
+  repeat(10) {
+    game.addScoreForPlayer(0);
+  }
+
+  repeat(10) {
+    game.addScoreForPlayer(1);
+  }
+
+  // Game score: 10-10
+  // Player 0 would have 2 serves now usually, but as the
+  // score is >= 20, it is now duece. Player 0 only has 1 serve.
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(0);
+
+  // Game score: 11-10
+  assertEqual(game.getPlayerServing(), 1);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 11-11
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 11-12
+  assertEqual(game.getPlayerServing(), 1);
+
+  repeat(5) {
+    game.subtractScoreForPlayer(0);
+  }
+
+  repeat(6) {
+    game.subtractScoreForPlayer(1);
+  }
+
+  // Game score: 6-6 - back to normal
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 6-7
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 6-8
+  assertEqual(game.getPlayerServing(), 1);
+}
+
+test(getPlayerServing_deuce_5_serves_each) {
+  beforeEach();
+
+  game.setServesEach(5);
+  game.setScoreToWin(21);
+
+  game.getPlayerServing();
+
+  repeat(20) {
+    game.addScoreForPlayer(0);
+  }
+
+  repeat(20) {
+    game.addScoreForPlayer(1);
+  }
+
+  // Game score: 20-20
+  // Player 0 would have 2 serves now usually, but as the
+  // score is >= 20, it is now duece. Player 0 only has 1 serve.
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(0);
+
+  // Game score: 21-20
+  assertEqual(game.getPlayerServing(), 1);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 21-21
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 21-22
+  assertEqual(game.getPlayerServing(), 1);
+
+  repeat(11) {
+    game.subtractScoreForPlayer(0);
+  }
+
+  repeat(12) {
+    game.subtractScoreForPlayer(1);
+  }
+
+  // Game score: 10-10 - back to normal
+  assertEqual(game.getPlayerServing(), 0);
+
+  game.addScoreForPlayer(1);
+
+  // Game score: 10-11
+  assertEqual(game.getPlayerServing(), 0);
+
+  repeat(4) {
+    game.addScoreForPlayer(1);
+  }
+
+  // Game score: 10-15
+  assertEqual(game.getPlayerServing(), 1);
+}
+
+test(getScoreToWinAsTotal) {
+  beforeEach();
+
+  game.setScoreToWin(21);
+
+  assertEqual(game.getScoreToWinAsTotal(), 42);
+
+  game.setScoreToWin(11);
+
+  assertEqual(game.getScoreToWinAsTotal(), 22);
 }
 
 void setup() {

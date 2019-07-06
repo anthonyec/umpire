@@ -5,7 +5,9 @@
 Umpire::Umpire()
 // Intialisation list
 : numberOfServesEach(2),
-  initialSideToServe(0)
+  initialSideToServe(0),
+  scoreToWin(11),
+  pointLeadToWin(2)
 {
   // Array can only be assigned by stating the type
   uint8_t score[2] = {0, 0};
@@ -35,6 +37,10 @@ void Umpire::setInitialServer(uint8_t playerIndex) {
   initialSideToServe = playerIndex;
 };
 
+void Umpire::setScoreToWin(uint8_t number) {
+  scoreToWin = number;
+}
+
 void Umpire::flipInitialServer() {
   initialSideToServe = initialSideToServe ^ 1;
 };
@@ -47,9 +53,18 @@ uint8_t Umpire::getScoreTotal() {
   return score[0] + score[1];
 };
 
+uint8_t Umpire::getScoreToWinAsTotal() {
+  return scoreToWin * 2;
+}
+
 uint8_t Umpire::getPlayerServing() {
   uint8_t scoreTotal = Umpire::getScoreTotal();
-  uint8_t serving = fmod(floor((double)scoreTotal / numberOfServesEach), 2);
+  uint8_t scoreToWinAsTotal = Umpire::getScoreToWinAsTotal();
+
+  bool deuce = scoreTotal >= (scoreToWinAsTotal - pointLeadToWin);
+
+  uint8_t servesEach = deuce ? 1 : numberOfServesEach;
+  uint8_t serving = fmod(floor((double)scoreTotal / servesEach), 2);
 
   return serving ^ initialSideToServe;
 };
