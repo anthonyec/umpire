@@ -15,6 +15,7 @@ class Umpire {
     void flipInitialServer(); // t
     uint8_t getScoreForPlayer(uint8_t playerIndex); // t
     uint8_t getScoreTotal(); // t
+    uint8_t getScoreToWinAsTotal(); // t
     uint8_t getScoreDifference(); // t
     uint8_t getPlayerServing(); // t
 
@@ -23,6 +24,7 @@ class Umpire {
     uint8_t initialSideToServe = 0;
     uint8_t numberOfServesEach;
     uint8_t scoreToWin;
+    uint8_t pointLeadToWin;
 };
 
 #endif

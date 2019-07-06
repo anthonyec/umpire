@@ -309,6 +309,18 @@ test(getPlayerServing_deuce_5_serves_each) {
   assertEqual(game.getPlayerServing(), 1);
 }
 
+test(getScoreToWinAsTotal) {
+  beforeEach();
+
+  game.setScoreToWin(21);
+
+  assertEqual(game.getScoreToWinAsTotal(), 42);
+
+  game.setScoreToWin(11);
+
+  assertEqual(game.getScoreToWinAsTotal(), 22);
+}
+
 void setup() {
   delay(1000);
   Serial.begin(9600);
